@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Masquerade // RSVP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      background: #000;
+      color: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      padding: 40px 12px;
+    }
+    .frame {
+      max-width: 420px;
+      width: 100%;
+      border: 1px solid #444;
+      padding: 24px 20px 28px;
+      border-radius: 16px;
+      background: radial-gradient(circle at top, #222 0, #000 60%);
+      box-shadow: 0 0 30px rgba(255,255,255,0.12);
+    }
+    .system-label {
+      letter-spacing: 0.15em;
+      font-size: 0.7rem;
+      color: #aaa;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .hero-image {
+      width: 100%;
+      border-radius: 14px;
+      margin-bottom: 18px;
+      border: 1px solid #444;
+      overflow: hidden;
+    }
+    .hero-image img {
+      width: 100%;
+      display: block;
+      animation: spin 18s linear infinite;
+      transform-origin: center center;
+    }
+    @keyframes spin {
+      from { transform: rotate(0deg) scale(1.05); }
+      to   { transform: rotate(360deg) scale(1.05); }
+    }
+    h1 {
+      font-size: 2.2rem;
+      margin: 0 0 8px;
+    }
+    #glitch {
+      position: relative;
+      display: inline-block;
+    }
+    .meta-block {
+      margin-top: 16px;
+      border-top: 1px solid #444;
+      padding-top: 12px;
+      font-size: 0.8rem;
+    }
+    .meta-label {
+      font-weight: 600;
+      color: #bbb;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      margin-bottom: 4px;
+    }
+    .meta-value {
+      font-size: 0.95rem;
+      margin-bottom: 2px;
+    }
+    .meta-sub {
+      font-size: 0.75rem;
+      color: #888;
+      font-style: italic;
+    }
+    .divider {
+      border-top: 1px solid #333;
+      margin: 18px 0;
+    }
+    .rsvp-btn {
+      margin-top: 18px;
+      width: 100%;
+      padding: 10px 0;
+      border-radius: 10px;
+      background: #000;
+      border: 1px solid #fff;
+      color: #fff;
+      text-align: center;
+      cursor: pointer;
+      font-size: 0.9rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      transition: box-shadow 0.2s, transform 0.1s, background 0.2s;
+    }
+    .rsvp-btn:hover {
+      box-shadow: 0 0 18px rgba(255,255,255,0.65);
+      transform: translateY(-1px);
+      background: #111;
+    }
+    .badge-line {
+      margin-top: 12px;
+      font-size: 0.72rem;
+      letter-spacing: 0.19em;
+      text-transform: uppercase;
+      color: #aaa;
+      text-align: center;
+    }
+    form {
+      margin-top: 18px;
+      font-size: 0.85rem;
+    }
+    .field {
+      margin-bottom: 12px;
+    }
+    label {
+      display: block;
+      margin-bottom: 4px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.68rem;
+      color: #bbb;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 7px 9px;
+      border-radius: 8px;
+      border: 1px solid #555;
+      background: #050505;
+      color: #f5f5f5;
+      font-family: inherit;
+      font-size: 0.85rem;
+    }
+    textarea { min-height: 60px; resize: vertical; }
+    .submit-btn {
+      margin-top: 10px;
+      width: 100%;
+      padding: 9px 0;
+      border-radius: 9px;
+      border: none;
+      background: #f5f5f5;
+      color: #000;
+      font-weight: 600;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
+    .status {
+      margin-top: 8px;
+      font-size: 0.75rem;
+      text-align: center;
+      color: #ccc;
+      min-height: 1em;
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <div class="system-label">SYSTEM_ALERT_</div>
+
+    <!-- spinning image -->
+    <div class="hero-image">
+      <!-- Replace src with your own square-ish image URL -->
+      <img src="https://via.placeholder.com/600x600?text=Masquerade" alt="Mask" />
+    </div>
+
+    <h1>
+      <span id="glitch" data-text="Masquerade">Masquerade</span>
+    </h1>
+
+    <div class="meta-block">
+      <div class="meta-label">EVENING_PROTOCOL</div>
+      <div class="meta-value">October 24th, 2025</div>
+      <div class="meta-value">22:00_HRS</div>
+    </div>
+
+    <div class="meta-block">
+      <div class="meta-label">LOCATION</div>
+      <div class="meta-value">Adams Pool Theater</div>
+      <div class="meta-sub">Unseen space, hasn't been open in nearly a decade</div>
+    </div>
+
+    <button class="rsvp-btn" id="scroll-rsvp">[ RSVP_NOW ]</button>
+
+    <div class="badge-line">MASKS_REQUIRED // IDENTITY_OPTIONAL</div>
+
+    <div class="divider"></div>
+
+    <form id="rsvp-form">
+      <div class="field">
+        <label for="name">Name*</label>
+        <input id="name" name="name" required />
+      </div>
+      <div class="field">
+        <label for="email">Email*</label>
+        <input id="email" name="email" type="email" required />
+      </div>
+      <div class="field">
+        <label for="attending">Will you attend?*</label>
+        <select id="attending" name="attending" required>
+          <option value="">Select…</option>
+          <option value="Yes">Yes, I’ll be there</option>
+          <option value="No">No, sadly can’t</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="guests">Number of guests (incl. you)</label>
+        <input id="guests" name="guests" type="number" min="1" value="1" />
+      </div>
+      <div class="field">
+        <label for="notes">Notes / access / rituals</label>
+        <textarea id="notes" name="notes"></textarea>
+      </div>
+      <button type="submit" class="submit-btn">Transmit RSVP</button>
+      <div class="status" id="status"></div>
+    </form>
+  </div>
+
+  <script>
+    // ========= GLITCHING TITLE =========
+    const glitchEl = document.getElementById("glitch");
+    const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ΔΩΨΛΣΦΞ∂βµπ";
+
+    function glitchOnce() {
+      const original = glitchEl.dataset.text;
+      let frame = 0;
+      const maxFrames = 18;
+
+      const timer = setInterval(() => {
+        let out = "";
+        for (let i = 0; i < original.length; i++) {
+          const ch = original[i];
+          if (ch === " ") { out += " "; continue; }
+          if (frame < maxFrames && Math.random() < 0.5) {
+            out += GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+          } else {
+            out += ch;
+          }
+        }
+        glitchEl.textContent = out;
+        frame++;
+        if (frame >= maxFrames) clearInterval(timer);
+      }, 60);
+    }
+
+    glitchOnce();
+    setInterval(glitchOnce, 4000);
+
+    // scroll to form when button clicked
+    document.getElementById("scroll-rsvp").addEventListener("click", () => {
+      document.getElementById("rsvp-form").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    // ========= RSVP FORM SUBMIT =========
+    const SCRIPT_URL = "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE"; // <-- replace this
+    const form = document.getElementById("rsvp-form");
+    const statusEl = document.getElementById("status");
+    const submitBtn = form.querySelector(".submit-btn");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      statusEl.textContent = "Transmitting…";
+      submitBtn.disabled = true;
+
+      const formData = new FormData(form);
+
+      try {
+        const res = await fetch(SCRIPT_URL, {
+          method: "POST",
+          body: new URLSearchParams(formData)
+        });
+        const data = await res.json();
+
+        if (data.status === "success") {
+          statusEl.textContent = "RSVP received. See you in the shadows.";
+          form.reset();
+        } else {
+          statusEl.textContent = "Glitch detected. Try again.";
+        }
+      } catch (err) {
+        console.error(err);
+        statusEl.textContent = "Connection error. Try again in a moment.";
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
