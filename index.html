@@ -345,23 +345,32 @@
 
     <div class="divider"></div>
 
-    <form id="rsvp-form">
-      <div class="field">
-        <label for="name">Name*</label>
-        <input id="name" name="name" required />
-      </div>
-      <div class="field">
-        <label for="uni">UNI*</label>
-        <input id="uni" name="uni" required />
-      </div>
-      <div class="field">
-        <label for="phone">Phone*</label>
-        <input id="phone" name="phone" type="tel" required />
-      </div>
+    <!-- MAP SECTION (shown first) -->
+    <div id="map-wrapper">
+      <img src="map.png" alt="Map to the Crypt" class="map-image" />
+    </div>
+    
+    <!-- FORM SECTION (hidden until RSVP button is clicked) -->
+    <div id="form-wrapper" style="display: none;">
+      <form id="rsvp-form">
+        <div class="field">
+          <label for="name">Name*</label>
+          <input id="name" name="name" required />
+        </div>
+        <div class="field">
+          <label for="uni">UNI*</label>
+          <input id="uni" name="uni" required />
+        </div>
+        <div class="field">
+          <label for="phone">Phone*</label>
+          <input id="phone" name="phone" type="tel" required />
+        </div>
+    
+        <button type="submit" class="submit-btn">Submit RSVP</button>
+        <div class="status" id="status"></div>
+      </form>
+    </div>
 
-      <button type="submit" class="submit-btn">Submit RSVP</button>
-      <div class="status" id="status"></div>
-    </form>
 
     </div>
   </div>
@@ -424,11 +433,21 @@
       }, Math.random() * 1000);
     });
 
-    // ========= SCROLL TO FORM =========
-    document.getElementById("scroll-rsvp").addEventListener("click", () => {
-      document
-        .getElementById("rsvp-form")
-        .scrollIntoView({ behavior: "smooth", block: "start" });
+    // ========= REVEAL FORM ON RSVP BUTTON =========
+    const rsvpBtn     = document.getElementById("scroll-rsvp");
+    const mapWrapper  = document.getElementById("map-wrapper");
+    const formWrapper = document.getElementById("form-wrapper");
+    
+    rsvpBtn.addEventListener("click", () => {
+      // hide the map, show the form
+      if (mapWrapper)  mapWrapper.style.display  = "none";
+      if (formWrapper) formWrapper.style.display = "block";
+    
+      // scroll to the form
+      const formEl = document.getElementById("rsvp-form");
+      if (formEl) {
+        formEl.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     });
 
     // ========= RSVP FORM SUBMIT =========
