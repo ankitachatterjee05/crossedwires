@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>CROSSED WIRES // RSVP</title>
+  <title>TIME CAPSULE // RSVP</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     * { box-sizing: border-box; }
@@ -324,7 +324,7 @@
     </div>
 
     <h1>
-      <span id="glitch-title" class="glitchy title-serif" data-text="CROSSED WIRES">CROSSED WIRES</span>
+      <span id="glitch-title" class="glitchy title-serif" data-text="TIME CAPSULE">TIME CAPSULE</span>
     </h1>
     <div class="subheader glitchy" data-text="by Postcrypt Art Gallery">
       by Postcrypt Art Gallery
@@ -338,8 +338,8 @@
       <div class="meta-value glitchy" data-text="18:00_HRS (arrive promptly)">
         18:00_HRS (arrive promptly)
       </div>
-      <div class="meta-sub glitchy" data-text="The games begin at precisely 6:30pm.">
-        The games begin at precisely 6:30pm.
+      <div class="meta-sub glitchy" data-text="Bring an object of affection">
+        Bring an object of affection.
       </div>
     </div>
 
@@ -353,9 +353,9 @@
       </div>
     </div>
 
-    <div class="description glitchy" data-text="A cocktail party featuring an evening of live music, mysteries, and crossed wires.">
+    <div class="description glitchy" data-text="A cocktail party featuring an evening of live music.">
       A <strong>cocktail party</strong> 
-      featuring an evening of live music, mysteries, and crossed wires.
+      featuring an evening of live music.
     </div>
 
     <button class="rsvp-btn" id="scroll-rsvp">
@@ -416,35 +416,60 @@
       return ch;
     }
 
+    // --- add near the top of your script (after SIM_MAP is fine) ---
+    const GLITCH_COLORS = ["#6117A5", "#001E94", "#FFD400", "#708238"]; 
+    // violet, deep blue, yellow, green
+    
+    function escapeHTML(str) {
+      return str
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+    
     function glitchOnceForElement(el) {
       const original = el.dataset.text || el.textContent;
       if (!original) return;
       el.dataset.text = original;
-
+    
       let frame = 0;
-      const maxFrames = 8 + Math.floor(Math.random() * 4); 
-
+      const maxFrames = 8 + Math.floor(Math.random() * 4);
+    
       const timer = setInterval(() => {
-        let out = "";
+        let outHTML = "";
+    
         for (let i = 0; i < original.length; i++) {
           const ch = original[i];
-          if (ch === " " || ch === "\n") { out += ch; continue; }
-
-          // slightly lower probability so it's more subtle
-          if (frame < maxFrames && Math.random() < 0.12) {
-            out += mapCharSimilar(ch);
+    
+          // Preserve spaces/newlines without spans
+          if (ch === " ") { outHTML += " "; continue; }
+          if (ch === "\n") { outHTML += "<br>"; continue; }
+    
+          const doGlitch = frame < maxFrames && Math.random() < 0.12;
+    
+          if (doGlitch) {
+            const glitchedChar = mapCharSimilar(ch);
+            const color = GLITCH_COLORS[Math.floor(Math.random() * GLITCH_COLORS.length)];
+    
+            outHTML += `<span style="color:${color}">${escapeHTML(glitchedChar)}</span>`;
           } else {
-            out += ch;
+            // normal character, normal color
+            outHTML += `<span>${escapeHTML(ch)}</span>`;
           }
         }
-        el.textContent = out;
+    
+        el.innerHTML = outHTML;
         frame++;
+    
         if (frame >= maxFrames) {
-          el.textContent = original;
+          el.textContent = original;  // restore clean text
           clearInterval(timer);
         }
       }, 70);
     }
+
 
     // Each element gets its own interval with a random delay
     document.querySelectorAll(".glitchy").forEach((el) => {
