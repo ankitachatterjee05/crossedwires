@@ -16,7 +16,7 @@
       min-height: 100vh;
       font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       background: #000;
-      color: #0e0f89;
+      color: #FFFFFF;
       display: flex;
       justify-content: center;
       padding: 40px 12px;
@@ -416,7 +416,7 @@
       return ch;
     }
     
-    const GLITCH_COLORS = ["#060760", "#DEEC06", "#EBECEE", "#061872"]; // same palette for glitch
+    const GLITCH_COLORS = ["#c1ff72"]; // same palette for glitch
     
     function escapeHTML(str) {
       return str
@@ -477,7 +477,7 @@
         glitchOnceForElement(el);
         setInterval(() => {
           glitchOnceForElement(el);
-        }, 2700 + Math.random() * 4000); // each 2.2–6.4s
+        }, 2850 + Math.random() * 4000); // each 2.2–6.4s
       }, Math.random() * 500);
     });
 
